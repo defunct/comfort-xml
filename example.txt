@@ -1,0 +1,20 @@
+public void foo() {
+    XGrinder
+        .grind(new File("./my.xml"))
+            .namespace("http://my.namepsace.com", "job")
+            .when("/document/employee", new End() {
+                    public void end(Element element, Sink sink) {
+                        String firstName = element.getText("first-name");
+                        if (firstName != null) {
+                            element.setText("first-name", firstName.toUpperCase());
+                        }
+                    }
+                })
+            .commence();
+    Document document = Builder.document(new File("my.xml"));
+    for (Element employee : document.elements("/document/employee")) {
+        String firstName = employee.getText("first-name");
+        for (Element address : employee.elements("addresses")) {
+        }
+    }
+}
