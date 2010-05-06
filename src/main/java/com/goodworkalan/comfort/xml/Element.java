@@ -19,6 +19,9 @@ public class Element {
         this.element = element;
     }
     
+    public void remove() {
+    }
+
     public String getLocalName() {
         return element.getLocalName();
     }

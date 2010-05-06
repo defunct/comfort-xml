@@ -68,6 +68,23 @@ public class Document {
         namespaces.put(name, url);
     }
 
+    /**
+     * Evaluate an XPath expression and return a list of elements that match the
+     * XPath expression. If the XPath expression matches nodes that are not
+     * elements, those nodes are discarded and are not present in the resulting
+     * element list.
+     * <p>
+     * Note that the resulting list is not a live list like in W3C DOM and is
+     * not connected to the underlying document. Unlike a W3C DOM
+     * {@link NodeList}, changes to document are not reflected in the list.
+     * Likewise, removing an element from the list does not remove it from the
+     * document. You can use the {@link Element#remove() remove} method of
+     * <code>Element</code> to remove the elements from the document.
+     * 
+     * @param expression
+     *            The XPath expression.
+     * @return The list of elements matched by the XPath expression.
+     */
     public List<Element> elements(String expression) {
         List<Element> elements = new ArrayList<Element>();
         XPathExpression expr;
