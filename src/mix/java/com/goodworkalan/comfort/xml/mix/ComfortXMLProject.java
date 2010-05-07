@@ -9,7 +9,7 @@ public class ComfortXMLProject extends ProjectModule {
     public void build(Builder builder) {
         builder
             .cookbook(JavaProject.class)
-                .produces("com.github.bigeasy.comfort-xml/comfort-xml/0.1")
+                .produces("com.github.bigeasy.comfort-xml/comfort-xml/0.1.0.1")
                 .main()
                     .depends()
                         .include("com.github.bigeasy.danger/danger/0.1.+0")
