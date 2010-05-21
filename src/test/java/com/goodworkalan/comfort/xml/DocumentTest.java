@@ -8,7 +8,7 @@ public class DocumentTest {
     @Test
     public void test() {
         Document document = new Serializer().load(getClass().getResourceAsStream("example.xml"));
-        document.setNamespace("doc", "http://goodworkalan.com/document");
+        document.setNamespacePrefix("doc", "http://goodworkalan.com/document");
         for (Element element : document.elements("/doc:document/doc:employee")) {
             System.out.println(element.getText("doc:first-name"));
         }

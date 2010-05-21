@@ -15,7 +15,16 @@ public class Element {
     private org.w3c.dom.Element element;
     
     private final Document document;
-    
+
+    /**
+     * Create an element that is a member of the given Comfort XML
+     * <code>document</code> that wraps the given W3C DOM <code>element</code>.
+     * 
+     * @param document
+     *            The Comfort XML document.
+     * @param element
+     *            The W3C DOM element.
+     */
     Element(Document document, org.w3c.dom.Element element) {
         this.document = document;
         this.element = element;

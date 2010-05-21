@@ -21,9 +21,18 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.xml.sax.SAXException;
 
+/**
+ * Reads and writes XML documents to and from I/O streams.
+ *
+ * @author Alan Gutierrez
+ */
 public class Serializer {
+    /** Whether or not to enable namespaces in the XML parser. */
     private boolean namespaceAware = true;
-    
+
+    /**
+     * Create a serializer.
+     */
     public Serializer() {
     }
     

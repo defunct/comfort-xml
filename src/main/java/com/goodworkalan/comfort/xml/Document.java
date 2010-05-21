@@ -4,11 +4,9 @@ import static com.goodworkalan.comfort.xml.ComfortXMLException.XPATH_COMPILE;
 import static com.goodworkalan.comfort.xml.ComfortXMLException.XPATH_EVALUATE;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.namespace.NamespaceContext;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
@@ -17,42 +15,56 @@ import javax.xml.xpath.XPathFactory;
 
 import org.w3c.dom.NodeList;
 
+/**
+ * An XML document.
+ * 
+ * @author Alan Gutierrez
+ */
 public class Document {
-    final org.w3c.dom.Document document;
-    
-    final Map<String, String> namespaces = new HashMap<String, String>();
+    /** The cache of compiled XPath expressions. */
+    private final Map<String, XPathExpression> cached = new HashMap<String, XPathExpression>();
 
+    /** The map of namespace prefixes to namespace URIs. */
+    private final Map<String, String> namespaces = new HashMap<String, String>();
+
+    /** The XPath expression compiler. */
     final XPath xpath = XPathFactory.newInstance().newXPath();
-    
+
+    /** The underlying W3C DOM document. */
+    final org.w3c.dom.Document document;
+
+    /**
+     * Create a document that is a wrapper around the given W3C DOM document.
+     * 
+     * @param document
+     *            The document to wrap.
+     */
     public Document(org.w3c.dom.Document document) {
         this.document = document;
-        this.xpath.setNamespaceContext(new NamespaceContext() {
-            @SuppressWarnings("unchecked")
-            public Iterator getPrefixes(String namespaceURI) {
-                return namespaces.entrySet().iterator();
-            }
-            
-            public String getPrefix(String namespaceURI) {
-                for(Map.Entry<String, String> mapping : namespaces.entrySet()) {
-                    if (mapping.getValue().equals(namespaceURI)) {
-                        return mapping.getKey();
-                    }
-                }
-                return null;
-            }
-            
-            public String getNamespaceURI(String prefix) {
-                return namespaces.get(prefix);
-            }
-        });
+        this.xpath.setNamespaceContext(new HashMapNamespaceContext(namespaces));
     }
-    
-    public void setNamespace(String name, String url) {
-        namespaces.put(name, url);
+
+    /**
+     * Set the namespace prefix for the given url to the given prefix.
+     * 
+     * @param prefix
+     *            The namespace prefix.
+     * @param url
+     *            The namespace url.
+     */
+    public void setNamespacePrefix(String prefix, String url) {
+        namespaces.put(prefix, url);
     }
-    private final Map<String, XPathExpression> cached = new HashMap<String, XPathExpression>();
-    
-    public XPathExpression compile(String expression) {
+
+    /**
+     * Compile the given XPath expression. If the expression already exists in
+     * the cache, the cached expression is returned.
+     * 
+     * @param expression
+     *            The XPath expression.
+     * @return A compiled XPath expression.
+     */
+    XPathExpression compile(String expression) {
         XPathExpression expr = cached.get(expression);
         if (expr != null) {
             return expr;

@@ -1,0 +1,6 @@
+Fri May 21 00:38:30 CDT 2010
+    
+    One of the touted benefits of the great abandonment of everything is an
+    interface by the likes of DOM4J and XOM was a return to constructors. Not
+    going to be able to use constructors, of course, because I'm wrapping W3C
+    DOM, but I'm not going to make everything an interface, either.
