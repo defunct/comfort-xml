@@ -40,7 +40,7 @@ public class Serializer {
         this.namespaceAware = namespaceAware;
     }
 
-    public Document load(InputStream in) {
+    public Document load(InputStream in, String uri) {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         dbf.setNamespaceAware(namespaceAware);
         DocumentBuilder db;
@@ -52,7 +52,7 @@ public class Serializer {
         }
         org.w3c.dom.Document doc;
         try {
-            doc = db.parse(in);
+            doc = db.parse(in, uri);
         } catch (SAXException e) {
             throw new ComfortXMLException(0, e, in, e.getMessage());
         } catch (IOException e) {
@@ -63,7 +63,7 @@ public class Serializer {
     
     public Document load(File file) {
         try {
-            return load(new FileInputStream(file));
+            return load(new FileInputStream(file), null);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }

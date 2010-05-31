@@ -105,4 +105,8 @@ public class Document {
         }
         return Element.elements(this, nodeList);
     }
+    
+    public <T> NodeIterable<T> select(Class<T> nodeClass, String expression) {
+        return new NodeIterable<T>(nodeClass, null);
+    }
 }

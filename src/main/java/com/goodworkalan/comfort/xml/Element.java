@@ -11,9 +11,16 @@ import javax.xml.xpath.XPathExpressionException;
 
 import org.w3c.dom.NodeList;
 
+/**
+ * An element node in an XML document.
+ *
+ * @author Alan Gutierrez
+ */
 public class Element {
+    /** The W3C DOM element. */
     private org.w3c.dom.Element element;
     
+    /** The owner Comfort XML document. */
     private final Document document;
 
     /**
