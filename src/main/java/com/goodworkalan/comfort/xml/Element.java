@@ -9,6 +9,7 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.NodeList;
 
 /**
@@ -16,13 +17,7 @@ import org.w3c.dom.NodeList;
  *
  * @author Alan Gutierrez
  */
-public class Element {
-    /** The W3C DOM element. */
-    private org.w3c.dom.Element element;
-    
-    /** The owner Comfort XML document. */
-    private final Document document;
-
+public class Element extends Node {
     /**
      * Create an element that is a member of the given Comfort XML
      * <code>document</code> that wraps the given W3C DOM <code>element</code>.
@@ -33,8 +28,16 @@ public class Element {
      *            The W3C DOM element.
      */
     Element(Document document, org.w3c.dom.Element element) {
-        this.document = document;
-        this.element = element;
+        super(document, element);
+    }
+    
+    /**
+     * Get the underlying node cast to a W3C DOM element.
+     * 
+     * @return The W3C DOM element.
+     */
+    public org.w3c.dom.Element getElement() {
+        return (org.w3c.dom.Element) node;
     }
 
     /**
@@ -62,9 +65,6 @@ public class Element {
         }
         return elements;
     }
-    
-    public void remove() {
-    }
 
     /**
      * Get the local name of the element.
@@ -72,18 +72,14 @@ public class Element {
      * @return The local name.
      */
     public String getLocalName() {
-        if (element.getLocalName() == null) {
-            return element.getTagName();
+        if (getElement().getLocalName() == null) {
+            return getElement().getTagName();
         }
-        return element.getLocalName();
+        return getElement().getLocalName();
     }
     
-    public String getNamespace() {
-        return element.getNamespaceURI();
-    }
-
-    public String getText() {
-        return element.getTextContent();
+    public String getNamespaceURI() {
+        return getElement().getNamespaceURI();
     }
 
     /**
@@ -102,14 +98,49 @@ public class Element {
      * @return The list of elements matched by the XPath expression.
      */
     public List<Element> elements() {
-        return elements(document, element.getChildNodes());
+        return elements(document, getElement().getChildNodes());
+    }
+
+    /**
+     * Return a list of the attributes attached to this element.
+     * 
+     * @return The list of attributes.
+     */
+    public List<Attribute> getAttributes() {
+        List<Attribute> attributes = new ArrayList<Attribute>();
+        NamedNodeMap namedNodeMap = getElement().getAttributes();
+        for (int i = 0, stop = namedNodeMap.getLength(); i < stop; i++) {
+            attributes.add((Attribute) Node.wrap(document, namedNodeMap.item(i)));
+        }
+        return attributes;
+    }
+    
+    public Attribute getAttribute(String localName) {
+        return (Attribute) Node.wrap(document, getElement().getAttributeNodeNS(null, localName));
+    }
+    
+    public void setAttribute(String localName, String value) {
+        setAttribute(localName, null, value);
+    }
+
+    public void setAttribute(String localName, String namespaceURI, String value) {
+        getElement().removeAttributeNS(namespaceURI, localName);
+        if (namespaceURI != null) {
+            getElement().removeAttribute(localName);
+        }
+        if (document == null) {
+            throw new NullPointerException();
+        }
+        Attribute attribute = document.createAttribute(localName, namespaceURI);
+        attribute.setTextContent(value);
+        getElement().setAttributeNodeNS(attribute.getAttr());
     }
 
     public String getText(String expression) {
         XPathExpression expr = document.compile(expression);
         NodeList nodeList;
         try {
-            nodeList = (NodeList) expr.evaluate(element, XPathConstants.NODESET);
+            nodeList = (NodeList) expr.evaluate(getElement(), XPathConstants.NODESET);
         } catch (XPathExpressionException e) {
             throw new ComfortXMLException(XPATH_EVALUATE, e, expression);
         }

@@ -1,0 +1,16 @@
+COMFORT XML
+
+A wrapper around W3C DOM to create a Java like XML API.
+
+    Source: http://github.com/bigeasy/comfort-xml/tree/master
+    Documentation: http://wiki.github.com/bigeasy/comfort-io
+
+    Issues: http://bigeasy.lighthouseapp.com/projects/51853
+
+    Contact: alan@blogometer.com
+
+PURPOSE
+
+Using XML shouldn't be a punishment. W3C DOM was brought to us when software
+interfaces as contracts was the way of looking things, and the contract put
+forward by W3C DOM is about as equitable as a pay day loan.

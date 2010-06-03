@@ -26,7 +26,7 @@ public class DocumentTest {
         document = new Serializer().load(getClass().getResourceAsStream("slf4j-api-1.5.2.pom"), null);
         for (Element element : document.elements("/*[local-name() = 'project']/*[local-name() = 'parent' and *[local-name() = 'artifactId']]")) {
             assertEquals(element.getLocalName(), "parent");
-            assertEquals(element.getNamespace(), "http://maven.apache.org/POM/4.0.0");
+            assertEquals(element.getNamespaceURI(), "http://maven.apache.org/POM/4.0.0");
             assertEquals(element.getText("*[local-name() = 'artifactId']"), "slf4j-parent");
             assertEquals(element.getText("*[local-name() = 'groupId']"), "org.slf4j");
             assertEquals(element.getText("*[local-name() = 'version']"), "1.5.2");

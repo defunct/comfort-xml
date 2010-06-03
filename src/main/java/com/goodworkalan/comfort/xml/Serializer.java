@@ -27,7 +27,7 @@ import org.xml.sax.SAXException;
  * @author Alan Gutierrez
  */
 public class Serializer {
-    /** Whether or not to enable namespaces in the XML parser. */
+    /** Whether or not to enable name spaces in the XML parser. */
     private boolean namespaceAware = true;
 
     /**
@@ -68,6 +68,7 @@ public class Serializer {
             throw new RuntimeException(e);
         }
     }
+
     public void write(Document document, File file) {
         try {
             TransformerFactory factory = TransformerFactory.newInstance();
@@ -79,7 +80,7 @@ public class Serializer {
             xformer.setOutputProperty(OutputKeys.INDENT, "yes");
             xformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
      
-            Source source = new DOMSource(document.document);
+            Source source = new DOMSource(document.getDocument());
             Result result = new StreamResult(new FileWriter(file));
             xformer.transform(source, result);
         } catch (TransformerException e) {
