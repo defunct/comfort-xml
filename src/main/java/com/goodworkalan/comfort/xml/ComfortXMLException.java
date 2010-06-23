@@ -1,9 +1,5 @@
 package com.goodworkalan.comfort.xml;
 
-import java.util.ResourceBundle;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-
 import com.goodworkalan.danger.CodedDanger;
 
 /**
@@ -14,9 +10,6 @@ import com.goodworkalan.danger.CodedDanger;
 public class ComfortXMLException extends CodedDanger {
     /** Serial version id. */
     private static final long serialVersionUID = 1L;
-    
-    /** The cache of exception message resource bundles. */
-    private final static ConcurrentMap<String, ResourceBundle> BUNDLE = new ConcurrentHashMap<String, ResourceBundle>();
     
     /** Unable to compile XPath expression  */
     public static final int XPATH_COMPILE = 101;
@@ -37,6 +30,6 @@ public class ComfortXMLException extends CodedDanger {
      *            The positioned message format arguments.
      */
     public ComfortXMLException(int code, Throwable cause, Object...arguments) {
-        super(BUNDLE, code, cause, arguments);
+        super(code, cause, arguments);
     }
 }
