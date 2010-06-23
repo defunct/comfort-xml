@@ -1,4 +1,4 @@
-package com.goodworkalan.comfort.io.mix;
+package com.goodworkalan.comfort.xml.mix;
 
 import com.goodworkalan.mix.ProjectModule;
 import com.goodworkalan.mix.builder.Builder;
@@ -19,7 +19,7 @@ public class ComfortXMLProject implements ProjectModule {
     public void build(Builder builder) {
         builder
             .cookbook(JavaProject.class)
-                .produces("com.github.bigeasy.comfort-xml/comfort-xml/0.1.0.3")
+                .produces("com.github.bigeasy.comfort-xml/comfort-xml/0.1.0.4")
                 .depends()
                     .production("com.github.bigeasy.danger/danger/0.1.+0")
                     .development("org.testng/testng-jdk15/5.10")
