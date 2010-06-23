@@ -146,7 +146,17 @@ public class Document extends Node {
     public Element createElement(String localName, String namespaceURI) {
         return (Element) wrap(document, getDocument().createElementNS(namespaceURI, localName));
     }
-    
+
+    /**
+     * Create an attribute that belongs to the W3C DOM document wrapped by this
+     * Comfort XML document that has the given namespace URI and local name.
+     * 
+     * @param localName
+     *            The local name.
+     * @param namespaceURI
+     *            The namespace URI.
+     * @return A new attribute.
+     */
     public Attribute createAttribute(String localName, String namespaceURI) {
         return (Attribute) wrap(document, getDocument().createAttributeNS(namespaceURI, localName));
     }

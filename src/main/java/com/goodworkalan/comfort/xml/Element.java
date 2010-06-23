@@ -9,6 +9,7 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 
+import org.w3c.dom.Attr;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.NodeList;
 
@@ -77,7 +78,12 @@ public class Element extends Node {
         }
         return getElement().getLocalName();
     }
-    
+
+    /**
+     * Get the namespace URI of the element or null if none is defined.
+     * 
+     * @return The namespace URI or null.
+     */
     public String getNamespaceURI() {
         return getElement().getNamespaceURI();
     }
@@ -114,28 +120,68 @@ public class Element extends Node {
         }
         return attributes;
     }
-    
+
+    /**
+     * Get the attribute with the given local name or null no such attribute
+     * exists.
+     * 
+     * @param localName
+     *            The attribute local name.
+     * @return The attribute with the given local name or null.
+     */
     public Attribute getAttribute(String localName) {
         return (Attribute) Node.wrap(document, getElement().getAttributeNodeNS(null, localName));
     }
-    
+
+    /**
+     * Set the attribute with the given local name to the given value creating
+     * the attribute if necessary.
+     * 
+     * @param localName
+     *            The attribute local name.
+     * @param value
+     *            The attribute value.
+     */
     public void setAttribute(String localName, String value) {
         setAttribute(localName, null, value);
     }
 
+    /**
+     * Set the attribute with the given namespace URI and local name to the
+     * given value creating the attribute if necessary.
+     * 
+     * @param localName
+     *            The attribute local name.
+     * @param namespaceURI
+     *            The namespace URI.
+     * @param value
+     *            The attribute value.
+     */
     public void setAttribute(String localName, String namespaceURI, String value) {
-        getElement().removeAttributeNS(namespaceURI, localName);
-        if (namespaceURI != null) {
-            getElement().removeAttribute(localName);
+        Attr attr;
+        if (namespaceURI == null) {
+            attr = getElement().getAttributeNode(localName);
+        } else {
+            attr = getElement().getAttributeNodeNS(namespaceURI, localName);
         }
-        if (document == null) {
-            throw new NullPointerException();
+        Attribute attribute;
+        if (attr == null) {
+            attribute = document.createAttribute(localName, namespaceURI);
+            getElement().setAttributeNodeNS(attribute.getAttr());
+        } else {
+            attribute = (Attribute) Node.wrap(document, attr);
         }
-        Attribute attribute = document.createAttribute(localName, namespaceURI);
         attribute.setTextContent(value);
-        getElement().setAttributeNodeNS(attribute.getAttr());
     }
 
+    /**
+     * Get the given XPath expression as a string, catenating the text values of
+     * all the nodes returned by the XPath expression into a single string.
+     * 
+     * @param expression
+     *            The XPath expression.
+     * @return The string value of the XPath expression.
+     */
     public String getText(String expression) {
         XPathExpression expr = document.compile(expression);
         NodeList nodeList;

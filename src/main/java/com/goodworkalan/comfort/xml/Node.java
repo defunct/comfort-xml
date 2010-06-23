@@ -9,6 +9,12 @@ import static org.w3c.dom.Node.*;
 import org.w3c.dom.NodeList;
 
 public class Node {
+    /** The XML namespace declaration prefix. */
+    private final static String XMLNS = "xmlns";
+
+    /** The XML namespace declaration namespace URI. */
+    private final static String XMLNS_URI = "http://www.w3.org/2000/xmlns/";
+
     /** The owner Comfort XML document. */
     protected final Document document;
     
@@ -140,7 +146,14 @@ public class Node {
         }
         return (Element) wrap(document, previous);
     }
-    
+
+    /**
+     * Remove the child node.
+     * 
+     * @param child
+     *            The child node to remove.
+     * @return The removed child node.
+     */
     public Node removeChild(Node child) {
         return wrap(document, node.removeChild(child.node));
     }
@@ -169,16 +182,14 @@ public class Node {
         node.appendChild(document.getDocument().createTextNode(text));
     }
 
-    private final static String XMLNS = "xmlns";
-    
-    private final static String XMLNS_URI = "http://www.w3.org/2000/xmlns/";
-    
     /**
      * Create a map of the name spaces defined for the given W3C DOM element.
      * 
-     * @param element The W3C DOM element.
-     * @param namespaces The map of prefixes.
-     * @return
+     * @param element
+     *            The W3C DOM element.
+     * @param namespaces
+     *            The map of prefixes.
+     * @return A map of the namespace defined for the given W3C DOM document.
      */
     private static Map<String, String> namespaces(Element element, Map<String, String> namespaces) {
         for (;;) {
@@ -253,7 +264,14 @@ public class Node {
         }
         return node;
     }
-    
+
+    /**
+     * Append the given child node to the current node.
+     * 
+     * @param child
+     *            The child node.
+     * @return This appended child node.
+     */
     public Node appendChild(Node child) {
         return prefix(wrap(document, node.appendChild(child.node)));
     }
@@ -263,6 +281,11 @@ public class Node {
     }
 
     
+    /**
+     * Get the underlying W3C DOM node.
+     * 
+     * @return The underlying W3C DOM node.
+     */
     public org.w3c.dom.Node getNode() {
         return node;
     }
@@ -288,14 +311,19 @@ public class Node {
     private static void forTheSakeOfCoberturaCoverage() {
     }
 
+    /**
+     * Wrap the given W3C DOM node in a Comfort XML node.
+     * 
+     * @param document
+     *            The document node.
+     * @param node
+     *            The W3C DOM node.
+     * @return A Comfort XML wrapper node.
+     */
     public static Node wrap(Document document, org.w3c.dom.Node node) {
         if (node == null) {
             return null;
         }
-        return wrap(document, node, node.getNodeType());
-    }
-
-    public static Node wrap(Document document, org.w3c.dom.Node node, short nodeType) {
         switch (node.getNodeType()) {
         case ELEMENT_NODE:
             return new Element(document, (org.w3c.dom.Element) node);
