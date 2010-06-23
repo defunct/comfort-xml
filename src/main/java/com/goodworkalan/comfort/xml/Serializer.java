@@ -27,22 +27,15 @@ import org.xml.sax.SAXException;
  * @author Alan Gutierrez
  */
 public class Serializer {
-    /** Whether or not to enable name spaces in the XML parser. */
-    private boolean namespaceAware = true;
-
     /**
      * Create a serializer.
      */
     public Serializer() {
     }
     
-    public void setNamespaceAware(boolean namespaceAware) {
-        this.namespaceAware = namespaceAware;
-    }
-
     public Document load(InputStream in, String uri) {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        dbf.setNamespaceAware(namespaceAware);
+        dbf.setNamespaceAware(true);
         DocumentBuilder db;
         try {
             db = dbf.newDocumentBuilder();
