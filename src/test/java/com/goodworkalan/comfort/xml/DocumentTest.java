@@ -4,7 +4,9 @@ import static org.testng.Assert.assertEquals;
 
 import org.testng.annotations.Test;
 
+// TODO Document.
 public class DocumentTest {
+    // TODO Document.
     @Test
     public void test() {
         Document document = new Serializer().load(getClass().getResourceAsStream("example.xml"), null);
@@ -14,6 +16,7 @@ public class DocumentTest {
         }
     }
     
+    // TODO Document.
     @Test
     public void pomParent() {
         Document document = new Serializer().load(getClass().getResourceAsStream("plexus-utils-1.0.2.pom"), null);

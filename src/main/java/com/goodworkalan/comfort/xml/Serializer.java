@@ -33,6 +33,7 @@ public class Serializer {
     public Serializer() {
     }
     
+    // TODO Document.
     public Document load(InputStream in, String uri) {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         dbf.setNamespaceAware(true);
@@ -54,6 +55,7 @@ public class Serializer {
         return new Document(doc);
     }
     
+    // TODO Document.
     public Document load(File file) {
         try {
             return load(new FileInputStream(file), null);
@@ -62,6 +64,7 @@ public class Serializer {
         }
     }
 
+    // TODO Document.
     public void write(Document document, File file) {
         try {
             TransformerFactory factory = TransformerFactory.newInstance();

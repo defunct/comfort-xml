@@ -8,6 +8,7 @@ import static org.w3c.dom.Node.*;
 
 import org.w3c.dom.NodeList;
 
+// TODO Document.
 public class Node {
     /** The XML namespace declaration prefix. */
     private final static String XMLNS = "xmlns";
@@ -215,6 +216,7 @@ public class Node {
         }
     }
     
+    // TODO Document.
     private static Map<String, String> invert(Map<String, String> map) {
         Map<String, String> inverted = new HashMap<String, String>();
         for (Map.Entry<String, String> mapping : map.entrySet()) {
@@ -223,6 +225,7 @@ public class Node {
         return inverted;
     }
     
+    // TODO Document.
     private static void prefix(Map<String, String> namespaces, Map<String, String> prefixes, Element element) {
         boolean dirty = false;
         for (Attribute attribute : element.getAttributes()) {
@@ -257,7 +260,8 @@ public class Node {
         }
     }
     
-    private static Node prefix(Node node) {
+    // TODO Document.
+   private static Node prefix(Node node) {
         if (node.getNode().getNodeType() == ELEMENT_NODE) {
             Map<String, String> namespaces = namespaces((Element) node, new HashMap<String, String>());
             prefix(namespaces, invert(namespaces), (Element) node);
@@ -276,6 +280,7 @@ public class Node {
         return prefix(wrap(document, node.appendChild(child.node)));
     }
     
+    // TODO Document.
     public Node insertBefore(Node newChild, Node reference) {
         return prefix(wrap(document, node.insertBefore(newChild.node, reference.node)));
     }
@@ -293,10 +298,11 @@ public class Node {
     /**
      * Return the parent node or null.
      * <p>
-     * XXX Does not seem to be a need for a parent element, a) going backwards
-     * is usually to navigate to the next element from the backwards step, b) if
-     * you know that the parent is an element and not a document, then just
-     * cast.
+     * There does not appear to be a need for an analogous parent method
+     * that returns an element instead of a node. The element versions
+     * of the navigation methods skip none element nodes. There is nothing
+     * to skip with the parent node. It is either an element node, or else
+     * it is the document node.
      * 
      * @return The parent node.
      */
@@ -342,6 +348,7 @@ public class Node {
         throw new IllegalArgumentException();
     }
     
+    // TODO Document.
     public static List<Node> nodes(Document document, NodeList nodeList) {
         List<Node> list = new ArrayList<Node>();
         for (int i = 0, stop = nodeList.getLength(); i < stop; i++) {
