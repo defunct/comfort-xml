@@ -8,7 +8,11 @@ import static org.w3c.dom.Node.*;
 
 import org.w3c.dom.NodeList;
 
-// TODO Document.
+/**
+ * Base node class for Comfort XML node that wraps a W3C DOM node.
+ * 
+ * @author Alan Gutierrez
+ */
 public class Node {
     /** The XML namespace declaration prefix. */
     private final static String XMLNS = "xmlns";
@@ -216,7 +220,6 @@ public class Node {
         }
     }
     
-    // TODO Document.
     private static Map<String, String> invert(Map<String, String> map) {
         Map<String, String> inverted = new HashMap<String, String>();
         for (Map.Entry<String, String> mapping : map.entrySet()) {
@@ -225,7 +228,6 @@ public class Node {
         return inverted;
     }
     
-    // TODO Document.
     private static void prefix(Map<String, String> namespaces, Map<String, String> prefixes, Element element) {
         boolean dirty = false;
         for (Attribute attribute : element.getAttributes()) {
@@ -260,8 +262,7 @@ public class Node {
         }
     }
     
-    // TODO Document.
-   private static Node prefix(Node node) {
+    private static Node prefix(Node node) {
         if (node.getNode().getNodeType() == ELEMENT_NODE) {
             Map<String, String> namespaces = namespaces((Element) node, new HashMap<String, String>());
             prefix(namespaces, invert(namespaces), (Element) node);
@@ -279,12 +280,22 @@ public class Node {
     public Node appendChild(Node child) {
         return prefix(wrap(document, node.appendChild(child.node)));
     }
-    
-    // TODO Document.
+
+    /**
+     * Insert a new child element into the list of children for this node before
+     * the given reference node. After inserting the node, the namespace
+     * prefixes for the node and all of its children are updated using the
+     * namespace context in effect at the parent node..
+     * 
+     * @param newChild
+     *            The new child.
+     * @param reference
+     *            The reference child.
+     * @return The new child.
+     */
     public Node insertBefore(Node newChild, Node reference) {
         return prefix(wrap(document, node.insertBefore(newChild.node, reference.node)));
     }
-
     
     /**
      * Get the underlying W3C DOM node.
@@ -347,8 +358,17 @@ public class Node {
         }
         throw new IllegalArgumentException();
     }
-    
-    // TODO Document.
+
+    /**
+     * Convert the given node list into a Java list of Comfort XML nodes owned
+     * by the given document.
+     * 
+     * @param document
+     *            The Comfort XML document.
+     * @param nodeList
+     *            The W3C DOM node list.
+     * @return A list of Comfort XML nodes.
+     */
     public static List<Node> nodes(Document document, NodeList nodeList) {
         List<Node> list = new ArrayList<Node>();
         for (int i = 0, stop = nodeList.getLength(); i < stop; i++) {

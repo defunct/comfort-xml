@@ -21,7 +21,6 @@ public class ComfortXMLProject implements ProjectModule {
             .cookbook(JavaProject.class)
                 .produces("com.github.bigeasy.comfort-xml/comfort-xml/0.1.0.4")
                 .depends()
-                    .production("com.github.bigeasy.danger/danger/0.1.+0")
                     .development("org.testng/testng-jdk15/5.10")
                     .development("org.mockito/mockito-core/1.6")
                     .end()

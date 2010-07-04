@@ -32,8 +32,19 @@ public class Serializer {
      */
     public Serializer() {
     }
-    
-    // TODO Document.
+
+    /**
+     * Load a Comfort XML document from the given input stream using the given
+     * URI as the system identifier.
+     * 
+     * @param in
+     *            The input stream.
+     * @param uri
+     *            The system identifier.
+     * @return A Comfort XML document.
+     * @exception ComfortXMLException
+     *                For any parsing errors.
+     */
     public Document load(InputStream in, String uri) {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         dbf.setNamespaceAware(true);
@@ -55,16 +66,31 @@ public class Serializer {
         return new Document(doc);
     }
     
-    // TODO Document.
+    /**
+     * Load a Comfort XML document from the given file.
+     * 
+     * @param file
+     *            The file to load.
+     * @return A Comfort XML document.
+     * @exception ComfortXMLException
+     *                For any parsing errors.
+     */
     public Document load(File file) {
         try {
-            return load(new FileInputStream(file), null);
+            return load(new FileInputStream(file), file.toURI().toString());
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
 
-    // TODO Document.
+    /**
+     * Write the given Comfort XML document to the given file.
+     * 
+     * @param document
+     *            The Comfort XML document.
+     * @param file
+     *            The file.
+     */
     public void write(Document document, File file) {
         try {
             TransformerFactory factory = TransformerFactory.newInstance();

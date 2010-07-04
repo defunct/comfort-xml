@@ -4,11 +4,15 @@ import static org.testng.Assert.assertEquals;
 
 import org.testng.annotations.Test;
 
-// TODO Document.
+/**
+ * Unit tests for the {@link Document} class.
+ *
+ * @author Alan Gutierrez
+ */
 public class DocumentTest {
-    // TODO Document.
+    /** Read a document. */
     @Test
-    public void test() {
+    public void read() {
         Document document = new Serializer().load(getClass().getResourceAsStream("example.xml"), null);
         document.setNamespacePrefix("doc", "http://goodworkalan.com/document");
         for (Element element : document.elements("/doc:document/doc:employee")) {
@@ -16,7 +20,7 @@ public class DocumentTest {
         }
     }
     
-    // TODO Document.
+    /** Test XPath. */
     @Test
     public void pomParent() {
         Document document = new Serializer().load(getClass().getResourceAsStream("plexus-utils-1.0.2.pom"), null);
