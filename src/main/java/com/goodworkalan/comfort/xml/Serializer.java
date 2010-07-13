@@ -21,6 +21,8 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.xml.sax.SAXException;
 
+import com.goodworkalan.danger.Danger;
+
 /**
  * Reads and writes XML documents to and from I/O streams.
  *
@@ -59,9 +61,9 @@ public class Serializer {
         try {
             doc = db.parse(in, uri);
         } catch (SAXException e) {
-            throw new ComfortXMLException(0, e, in, e.getMessage());
+            throw new Danger(e, Serializer.class, "load.sax.exception", in, e.getMessage());
         } catch (IOException e) {
-            throw new ComfortXMLException(0, e, in, e.getMessage());
+            throw new Danger(e, Serializer.class, "load.io.exception", in, e.getMessage());
         }
         return new Document(doc);
     }
@@ -106,9 +108,9 @@ public class Serializer {
             Result result = new StreamResult(new FileWriter(file));
             xformer.transform(source, result);
         } catch (TransformerException e) {
-            throw new ComfortXMLException(0, e, file, e.getMessageAndLocation());
+            throw new Danger(e, Serializer.class, "write.transformer.exception", file, e.getMessageAndLocation());
         } catch (IOException e) {
-            throw new ComfortXMLException(0, e, file, e.getMessage());
+            throw new Danger(e, Serializer.class, "write.io.exception", file, e.getMessage());
         }
     }
 }

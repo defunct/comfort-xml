@@ -1,8 +1,5 @@
 package com.goodworkalan.comfort.xml;
 
-import static com.goodworkalan.comfort.xml.ComfortXMLException.XPATH_COMPILE;
-import static com.goodworkalan.comfort.xml.ComfortXMLException.XPATH_EVALUATE;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +11,8 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
 import org.w3c.dom.NodeList;
+
+import com.goodworkalan.danger.Danger;
 
 /**
  * An XML document.
@@ -73,7 +72,7 @@ public class Document extends Node {
         try {
             expr = xpath.compile(expression);
         } catch (XPathExpressionException e) {
-            throw new ComfortXMLException(XPATH_COMPILE, e, expression);
+            throw new Danger(Document.class, "xpathCompile", e, expression);
         }
         cached.put(expression, expr);
         return expr;
@@ -102,7 +101,7 @@ public class Document extends Node {
         try {
             nodeList = (NodeList) expr.evaluate(getDocument(), XPathConstants.NODESET);
         } catch (XPathExpressionException e) {
-            throw new ComfortXMLException(XPATH_EVALUATE, e, expression);
+            throw new Danger(e, Document.class, "xpath.evaluate", expression);
         }
         return Element.elements(document, nodeList);
     }
@@ -128,7 +127,7 @@ public class Document extends Node {
         try {
             nodeList = (NodeList) expr.evaluate(document, XPathConstants.NODESET);
         } catch (XPathExpressionException e) {
-            throw new ComfortXMLException(XPATH_EVALUATE, e, expression);
+            throw new Danger(e, Document.class, "xpath.evaluate", expression);
         }
         return Node.nodes(this, nodeList);
     }

@@ -19,10 +19,10 @@ public class ComfortXMLProject implements ProjectModule {
     public void build(Builder builder) {
         builder
             .cookbook(JavaProject.class)
-                .produces("com.github.bigeasy.comfort-xml/comfort-xml/0.1.0.4")
+                .produces("com.github.bigeasy.comfort-xml/comfort-xml/0.1.0.5")
                 .depends()
+                    .production("com.github.bigeasy.danger/danger/0.+3")
                     .development("org.testng/testng-jdk15/5.10")
-                    .development("org.mockito/mockito-core/1.6")
                     .end()
                 .end()
             .end();

@@ -1,7 +1,5 @@
 package com.goodworkalan.comfort.xml;
 
-import static com.goodworkalan.comfort.xml.ComfortXMLException.XPATH_EVALUATE;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +10,8 @@ import javax.xml.xpath.XPathExpressionException;
 import org.w3c.dom.Attr;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.NodeList;
+
+import com.goodworkalan.danger.Danger;
 
 /**
  * An element node in an XML document.
@@ -188,7 +188,7 @@ public class Element extends Node {
         try {
             nodeList = (NodeList) expr.evaluate(getElement(), XPathConstants.NODESET);
         } catch (XPathExpressionException e) {
-            throw new ComfortXMLException(XPATH_EVALUATE, e, expression);
+            throw new Danger(e, Document.class, "xpath.evaluate", expression);
         }
         int stop = nodeList.getLength();
         if (stop == 0) {

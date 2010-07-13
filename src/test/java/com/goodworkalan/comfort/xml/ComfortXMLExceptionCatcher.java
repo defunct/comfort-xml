@@ -3,6 +3,8 @@ package com.goodworkalan.comfort.xml;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
 
+import com.goodworkalan.danger.Danger;
+
 /**
  * Executes a runnable that raises a <code>ComfortXMLException</code> that
  * is caught and its properties checked.
@@ -36,10 +38,10 @@ public class ComfortXMLExceptionCatcher {
     public void run() {
         try {
             runnable.run();
-        } catch (ComfortXMLException e) {
-            assertEquals(e.getCode(), code);
-            if (Integer.toString(e.getCode()).equals(e.getMessage())) {
-                fail("No message for error code: " + e.getCode());
+        } catch (Danger e) {
+            assertEquals(e.code, code);
+            if (e.code.equals(e.getMessage())) {
+                fail("No message for error code: " + e.code);
             }
             System.out.println(e.getMessage());
             return;
