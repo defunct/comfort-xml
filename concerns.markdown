@@ -1,3 +1,13 @@
+---
+layout: default
+---
+
+## Prefix Updating
+
+Are up updating the prefixes correctly? When you descend the tree, do you update
+your context? What happens if a namespace is unmapped? No decisions made here
+yet. I'll add it to concerns and remove the document TODOs.
+
 ## Thread-Safety
 
 W3C DOM is not thread-safe and the default implementation does not address
